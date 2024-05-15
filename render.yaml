@@ -1,0 +1,35 @@
+services:
+  - type: web
+    plan: free
+    name: Wailist_project
+    env: docker
+    autoDeploy: false
+    plan: free
+    region: oregon
+    envVars:
+      - key: ENV
+        sync: False
+      - key: DJANGO_ALLOWED_HOST='*'
+        sync: False
+      - key: CORS_ALLOW_ALL_ORIGINS
+        sync: False
+      - key: CORS_ALLOWED_ORIGINS
+        sync: False
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: False
+      - key: CSRF_COOKIE_SECURE
+      - key: SECRET_KEY
+        generateValue: true
+        sync: False
+      - key: DEBUG
+        sync: False
+      - key: POSTGRES_DB
+        sync: False
+      - key: POSTGRES_USER
+        sync: False
+      - key: POSTGRES_PASSWORD
+        sync: False
+      - key: POSTGRES_HOST
+        sync: False
+      - key: POSTGRES_PORT
+        sync: False
