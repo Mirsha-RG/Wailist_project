@@ -46,10 +46,13 @@ INSTALLED_APPS = [
      #LOCAL APPS 
     'formulario',
     'listas',
+    #'usuarios',
     
     #THIRD APPS
     'rest_framework',
     'corsheaders',
+    #'dj_rest_auth', 
+    'rest_framework.authtoken',
     
     
 ]
@@ -160,3 +163,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#AUTH_USER_MODEL = 'usuarios.User'
