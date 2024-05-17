@@ -19,6 +19,7 @@ from django.urls import path
 
 from formulario.views import CreateFormularioView, RetriveFormularioView 
 from listas.views import CreateListaView, RetriveListaView
+from usuarios.views import RegisterUserView, RetrieveUserView, CreateTokenView, DeleteUserView, LoginView, LogoutView
 
 
 urlpatterns = [ 
@@ -35,6 +36,13 @@ urlpatterns = [
     path('get_lista/<int:lista_id>', RetriveListaView.as_view(), name='RetriveListaId'),
     path('put_lista/<int:lista_id>', RetriveListaView.as_view(), name='UpdateLista'),
     path('delete_lista/<int:lista_id>', RetriveListaView.as_view(), name='DeleteLista'),
+    
+    path('post_user/', RegisterUserView.as_view(), name='RegistroUsuario'),
+    path('put/<int:pk>/', RetrieveUserView.as_view(), name='UpdateUser'),
+    path('token/', CreateTokenView.as_view(), name='CreateToken'),
+    path('delete/<int:user_id>/', DeleteUserView.as_view(), name='DeleteUser'),  
+    path('login/', LoginView.as_view(), name='UserLogin'),  
+    path('logout/', LogoutView.as_view(), name='UserLogout'),
        
    
 ]

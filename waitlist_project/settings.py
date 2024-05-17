@@ -46,12 +46,12 @@ INSTALLED_APPS = [
      #LOCAL APPS 
     'formulario',
     'listas',
-    #'usuarios',
+    'usuarios',
     
     #THIRD APPS
     'rest_framework',
     'corsheaders',
-    #'dj_rest_auth', 
+    'dj_rest_auth', 
     'rest_framework.authtoken',
     
     
@@ -164,4 +164,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#AUTH_USER_MODEL = 'usuarios.User'
+AUTH_USER_MODEL = 'usuarios.User'
+
+
+REST_FRAMEWORK = {
+'DEFAULT_AUTHENTICATION_CLASSES': [
+    
+    'rest_framework.authentication.SessionAuthentication',
+]
+}
