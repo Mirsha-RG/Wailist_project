@@ -11,11 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import dj_database_url
 import os
 from decouple import config
-import dj_database_url
-
+import json
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,8 +50,8 @@ INSTALLED_APPS = [
     #THIRD APPS
     'rest_framework',
     'corsheaders',
-    'dj_rest_auth', 
     'rest_framework.authtoken',
+    'dj_database_url'
     
     
 ]
@@ -89,9 +88,9 @@ ROOT_URLCONF = 'waitlist_project.urls'
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',#Especifica que usarás el backend de plantillas de Django.
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # Lista de directorios donde Django buscará plantillas.
+        'APP_DIRS': True, #Indica a Django que busque plantillas en los directorios templates de cada aplicación instalada.
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -173,3 +172,16 @@ REST_FRAMEWORK = {
     'rest_framework.authentication.SessionAuthentication',
 ]
 }
+
+EMAIL_SETTINGS_FILE = os.path.join(BASE_DIR, 'email_settings.json')
+
+with open(EMAIL_SETTINGS_FILE) as data_file:
+    email_settings = json.load(data_file)
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'    
+EMAIL_HOST = email_settings['EMAIL_HOST']
+EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
+EMAIL_PORT = email_settings['EMAIL_PORT']
+EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
+DEFAULT_FROM_EMAIL = email_settings['EMAIL_HOST_USER']

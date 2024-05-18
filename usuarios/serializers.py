@@ -46,3 +46,28 @@ class AuthTokenSerializer(serializers.Serializer):
         return data
     
     
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField(required=True, write_only=True)
+    new_password = serializers.CharField(required=True, write_only=True)
+    
+    def validate_old_password(self, value):
+        user = self.context['request'].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("La contraseña actual es incorrecta")
+        return value
+    
+    def validate_new_password(self, value):
+        return value
+    
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+    
+ 
+class PasswordResetConfirmSerializer:
+    new_password = serializers.CharField(required=True)
+       
+    
+
+    
+    

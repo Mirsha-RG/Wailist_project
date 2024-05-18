@@ -92,7 +92,7 @@ coverage.xml
 
 # pyenv
 .python-version
-sfwit-cv-back/
+
 
 # celery
 celerybeat-schedule.*
@@ -104,6 +104,9 @@ celerybeat-schedule.*
 
 .venv
 .myenv
+.email_settings.json
+email_settings.json/
+
 
 
 venv/
