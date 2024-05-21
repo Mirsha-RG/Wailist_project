@@ -4,22 +4,32 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from usuarios.models import User
 from .models import Formulario
 from .serializers import FormularioSerializer
 
 # Create your views here.
 
 class CreateFormularioView(APIView):
-    permission_classes = (AllowAny,)  
-          
+    permission_classes = (IsAuthenticated,)  
+    
+    
     def post(self, request):
+        user = request.user
+        
+        total_registros = Formulario.objects.filter(user=User).count()
+    
+        if total_registros >= 500:
+                    return Response({'message': 'Has superado el limite de mensajes contratados'}, status=status.HTTP_400_BAD_REQUEST)           
+    
         data = request.data
         serializer = FormularioSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()      
         return Response({'message': 'Creado'}, status=status.HTTP_201_CREATED) 
+    
 
 class RetriveFormularioView(APIView):
     permission_classes = (AllowAny, )

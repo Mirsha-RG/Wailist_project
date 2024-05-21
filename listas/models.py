@@ -1,8 +1,10 @@
 from django.db import models
 
+from usuarios.models import User
 # Create your models here.
 class Lista (models.Model):
     
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='usuario id')
     name = models.CharField(max_length=120, verbose_name="Nombre lista", null=True)
     descrption = models.CharField(max_length=400, verbose_name= 'descripcion', null=True)
     is_active = models.BooleanField(default=True, verbose_name='activa/pausa') 

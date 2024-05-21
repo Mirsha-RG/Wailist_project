@@ -1,9 +1,11 @@
 from django.db import models
 
 from listas.models import Lista
+from usuarios.models import User
 # Create your models here.
 class Formulario(models.Model):
     
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='usuario id')
     lista = models.ForeignKey(Lista, on_delete=models.CASCADE, verbose_name='lista_id', null=True)
     usuario = models.CharField(max_length=120, verbose_name="Nombre usuario", null=True)
     email = models.EmailField(max_length=120, verbose_name= 'Correo Electronico', null=True)

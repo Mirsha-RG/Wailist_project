@@ -19,7 +19,9 @@ from django.urls import path
 
 from formulario.views import CreateFormularioView, RetriveFormularioView 
 from listas.views import CreateListaView, RetriveListaView
-from usuarios.views import RegisterUserView, RetrieveUserView, CreateTokenView, DeleteUserView, LoginView, LogoutView, ChangePasswordView, PasswordResetRequestView, PasswordResetConfirm
+from usuarios.views import (RegisterUserView, RetrieveUserView, CreateTokenView, DeleteUserView, LoginView, LogoutView, 
+                            ChangePasswordView, PasswordResetRequestView, PasswordResetConfirm, )
+from perfil.views import CreatePerfilAPIView, RetrivePerfilAPIView
 
 
 urlpatterns = [ 
@@ -47,6 +49,11 @@ urlpatterns = [
     path('change_password/', ChangePasswordView.as_view(), name='ChangePassword'),
     path('password_reset/', PasswordResetRequestView.as_view(), name='PasswordReset'),
     path('password_rest_confirm/<uidb64>/<token>/', PasswordResetConfirm.as_view(), name='UserLogout'),
+    
+    path('post_perfil/', CreatePerfilAPIView.as_view(), name='CreatePerfil'),
+    path('get_perfil/', RetrivePerfilAPIView.as_view(), name='RetrivePerfil'),
+    path('put_perfil/<int:perfil_id>', RetrivePerfilAPIView.as_view(), name='UpdatePerfil'),
+    path('delete_perfil/<int:perfil_id>', RetrivePerfilAPIView.as_view(), name='DeletePerfil'),
     
        
    

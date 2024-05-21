@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'formulario',
     'listas',
     'usuarios',
+    'perfil'
     
     #THIRD APPS
     'rest_framework',
@@ -175,13 +176,13 @@ REST_FRAMEWORK = {
 
 EMAIL_SETTINGS_FILE = os.path.join(BASE_DIR, 'email_settings.json')
 
-with open(EMAIL_SETTINGS_FILE) as data_file:
-    email_settings = json.load(data_file)
+#with open(EMAIL_SETTINGS_FILE) as data_file:
+    #email_settings = json.load(data_file)
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'    
-EMAIL_HOST = email_settings['EMAIL_HOST']
-EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
-EMAIL_PORT = email_settings['EMAIL_PORT']
-EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
-DEFAULT_FROM_EMAIL = email_settings['EMAIL_HOST_USER']
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'    
+#EMAIL_HOST = email_settings['EMAIL_HOST']
+#EMAIL_HOST_USER = email_settings['EMAIL_HOST_USER']
+#EMAIL_HOST_PASSWORD = email_settings['EMAIL_HOST_PASSWORD']
+#EMAIL_PORT = email_settings['EMAIL_PORT']
+#EMAIL_USE_TLS = email_settings['EMAIL_USE_TLS']
+#DEFAULT_FROM_EMAIL = email_settings['EMAIL_HOST_USER']

@@ -29,6 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     company = models.CharField(max_length=128, verbose_name="start up/empresa",null=True )
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128, verbose_name="password", null=True)
+    total_registros = models.PositiveBigIntegerField(default=0)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     
