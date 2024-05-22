@@ -1,4 +1,5 @@
-
+from django.core.mail import send_mail
+from django.conf import settings
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status
@@ -7,14 +8,14 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from usuarios.models import User
+from listas.models import Lista
 from .models import Formulario
 from .serializers import FormularioSerializer
 
 # Create your views here.
 
 class CreateFormularioView(APIView):
-    permission_classes = (IsAuthenticated,)  
-    
+    permission_classes = (IsAuthenticated,)      
     
     def post(self, request):
         user = request.user
@@ -30,6 +31,16 @@ class CreateFormularioView(APIView):
         serializer.save()      
         return Response({'message': 'Creado'}, status=status.HTTP_201_CREATED) 
     
+    def send_confirmation_email(self, formulario, listas):     
+        
+        
+        subject = 'Confirmacion de registro'      
+        message = f'Hola {formulario.usuario} \n\n,{listas.message} \n\nAqui estan los detalles de tu registro: \n\n{formulario.usuario} \nEmail: {formulario.email} \nTeléfono: {formulario.phone} \n\nSaludos.\nEl equipo de {listas.usuario} ' 
+        from_email = settings.EMAIL_HOST_USER   
+        to_email = [formulario.email]
+        
+        send_mail(subject, message, from_email, to_email, fail_silently=False)
+        
 
 class RetriveFormularioView(APIView):
     permission_classes = (AllowAny, )
