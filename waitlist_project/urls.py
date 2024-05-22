@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from formulario.views import CreateFormularioView, RetriveFormularioView 
-from listas.views import CreateListaView, RetriveListaView
+from listas.views import CreateListaView, RetriveListaView, ListListaView, ExportarListaCSVAPIView
 from usuarios.views import (RegisterUserView, RetrieveUserView, CreateTokenView, DeleteUserView, LoginView, LogoutView, 
                             ChangePasswordView, PasswordResetRequestView, PasswordResetConfirm, )
 from perfil.views import CreatePerfilAPIView, RetrivePerfilAPIView
@@ -35,6 +35,8 @@ urlpatterns = [
     
     path('post/lista', CreateListaView.as_view(), name='CreateLista'),
     path('get/lista', RetriveListaView.as_view(), name='RetriveListado'),
+    path('list_lista/', ListListaView.as_view(), name='Listado total'),
+    path('csv_lista/', ExportarListaCSVAPIView.as_view(), name='DescargarLista'),
     path('get_lista/<int:lista_id>', RetriveListaView.as_view(), name='RetriveListaId'),
     path('put_lista/<int:lista_id>', RetriveListaView.as_view(), name='UpdateLista'),
     path('delete_lista/<int:lista_id>', RetriveListaView.as_view(), name='DeleteLista'),

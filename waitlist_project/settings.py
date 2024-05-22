@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'formulario',
     'listas',
     'usuarios',
-    'perfil'
+    'perfil',
     
     #THIRD APPS
     'rest_framework',
