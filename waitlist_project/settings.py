@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'listas',
     'usuarios',
     'perfil',
+    'metricas',
     
     #THIRD APPS
     'rest_framework',
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'metricas.middlewares.MetricsMiddleware'
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True 
@@ -151,6 +153,7 @@ USE_I18N = True
 
 USE_TZ = True
 
+GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/

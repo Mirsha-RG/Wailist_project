@@ -23,6 +23,8 @@ from usuarios.views import (RegisterUserView, RetrieveUserView, CreateTokenView,
                             ChangePasswordView, PasswordResetRequestView, PasswordResetConfirm, )
 from perfil.views import CreatePerfilAPIView, RetrivePerfilAPIView
 
+from metricas.middlewares import MetricsMiddlewareFormulario, MetricsMiddlewareLista
+
 
 urlpatterns = [ 
     
@@ -57,7 +59,11 @@ urlpatterns = [
     path('put_perfil/<int:perfil_id>', RetrivePerfilAPIView.as_view(), name='UpdatePerfil'),
     path('delete_perfil/<int:perfil_id>', RetrivePerfilAPIView.as_view(), name='DeletePerfil'),
     
-       
+    
+    path('metricas_formulario/', MetricsMiddlewareFormulario.as_view(), name='Metricasformulario'),
+    path('metricas_lista/', MetricsMiddlewareLista.as_view(), name='MetricasLista'),
+    
+    
    
 ]
 

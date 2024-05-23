@@ -15,7 +15,7 @@ from .serializers import FormularioSerializer
 # Create your views here.
 
 class CreateFormularioView(APIView):
-    permission_classes = (IsAuthenticated,)      
+    permission_classes = (IsAuthenticated, )      
     
     def post(self, request):
         user = request.user
