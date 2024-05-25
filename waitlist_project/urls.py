@@ -1,29 +1,18 @@
-"""
-URL configuration for waitlist_project project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 from formulario.views import CreateFormularioView, RetriveFormularioView 
-from listas.views import CreateListaView, RetriveListaView, ListListaView, ExportarListaCSVAPIView
+from listas.views import CreateListaView, RetriveListaView, ListListaView, ExportarListaCSVAPIView, ToggleListaView
 from usuarios.views import (RegisterUserView, RetrieveUserView, CreateTokenView, DeleteUserView, LoginView, LogoutView, 
                             ChangePasswordView, PasswordResetRequestView, PasswordResetConfirm, )
 from perfil.views import CreatePerfilAPIView, RetrivePerfilAPIView
-
 from metricas.middlewares import MetricsMiddlewareFormulario, MetricsMiddlewareLista
+from pagina.views import CreateLandingPageAPIView, RetriveLandingPageAPIView, ToggleLandingPageView
+
 
 
 urlpatterns = [ 
@@ -42,6 +31,7 @@ urlpatterns = [
     path('get_lista/<int:lista_id>', RetriveListaView.as_view(), name='RetriveListaId'),
     path('put_lista/<int:lista_id>', RetriveListaView.as_view(), name='UpdateLista'),
     path('delete_lista/<int:lista_id>', RetriveListaView.as_view(), name='DeleteLista'),
+    path('privacidad_lista/<int:lista_id>', ToggleListaView.as_view(), name='PrivacidadLista'),
     
     
     path('post_user/', RegisterUserView.as_view(), name='RegistroUsuario'),
@@ -63,7 +53,12 @@ urlpatterns = [
     path('metricas_formulario/', MetricsMiddlewareFormulario.as_view(), name='Metricasformulario'),
     path('metricas_lista/', MetricsMiddlewareLista.as_view(), name='MetricasLista'),
     
-    
+    path('create_landing_page/', CreateLandingPageAPIView.as_view, name='CreateLandingPage'),
+    path('put_landing_page/', RetriveLandingPageAPIView.as_view, name='UpdateLandingPage'),
+    path('privacidad_landing_page/<int:landing_page_id>/', ToggleLandingPageView.as_view, name='PrivacidadLandingPage'),
    
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

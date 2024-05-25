@@ -1,4 +1,4 @@
-import requests
+
 from django.contrib.gis.geoip2 import GeoIP2
 from django.utils.deprecation import MiddlewareMixin
 

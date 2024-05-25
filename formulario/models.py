@@ -1,4 +1,6 @@
 from django.db import models
+from django import forms
+from captcha.fields import CaptchaField
 
 from listas.models import Lista
 from usuarios.models import User
@@ -16,5 +18,14 @@ class Formulario(models.Model):
     
     class Meta:
         db_table = 'formularios'
+        
+      
+class FormularioForm(forms.ModelForm):
+    captcha = CaptchaField()
+
+    class Meta:
+        model = Formulario
+        fields = ['usuario', 'email', 'phone' ]  
+
 
     

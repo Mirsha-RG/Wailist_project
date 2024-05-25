@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from captcha.models import CaptchaStore
+from captcha.helpers import captcha_image_url
+
 from usuarios.models import User
 from listas.models import Lista
 from .models import Formulario
@@ -27,6 +30,20 @@ class CreateFormularioView(APIView):
     
         data = request.data
         serializer = FormularioSerializer(data=data)
+        
+        if serializer.is_valid():
+            # Validate the CAPTCHA manually
+            captcha_response = serializer.validated_data.get('captcha')
+            captcha_key = request.data.get('captcha_0') # Obtiene la respuesta que el usuario ingresó para el CAPTCHA desde los datos del formulario.
+            captcha_value = request.data.get('captcha_1') #Obtiene la clave del CAPTCHA generada por el sistema, que se envía como parte del formulario.
+         
+            try:
+                captcha = CaptchaStore.objects.get(hashkey=captcha_key) #almacena todos los CAPTCHAs generados y sus respuestas, hashkey generalmente contiene la clave única generada para cada instancia de CAPTCHA.
+                if captcha_response.lower() != captcha.response: #Compara la respuesta proporcionada por el usuario
+                    return Response({'captcha': 'CAPTCHA Invalido'}, status=status.HTTP_400_BAD_REQUEST)
+            except CaptchaStore.DoesNotExist:
+                return Response({'captcha': 'CAPTCHA Invalido'}, status=status.HTTP_400_BAD_REQUEST)        
+        
         serializer.is_valid(raise_exception=True)
         serializer.save()      
         return Response({'message': 'Creado'}, status=status.HTTP_201_CREATED) 
@@ -43,7 +60,7 @@ class CreateFormularioView(APIView):
         
 
 class RetriveFormularioView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     
     def get (self,request):
         formulario_list = Formulario.objects.all()
@@ -65,12 +82,3 @@ class RetriveFormularioView(APIView):
         formulario_obj.save()
         return Response ({'mesage':'Eliminado'}, status=status.HTTP_204_NO_CONTENT)
     
-    
-"""
-    
-    def get(self, request, formulario_id):
-        formulario_obj = get_object_or_404(Formulario, id=formulario_id)
-        serializer = FormularioSerializer(formulario_obj)
-        
-        return Response (serializer.data, status=status.HTTP_200_OK) 
-        """

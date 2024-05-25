@@ -16,6 +16,7 @@ from .serializers import RegisterUserSerializer, AuthTokenSerializer, ChangePass
 
 class RegisterUserView(generics.CreateAPIView):
     serializer_class = RegisterUserSerializer
+    permission_classes = [permissions.IsAuthenticated]
     
 
 class RetrieveUserView(generics.UpdateAPIView):

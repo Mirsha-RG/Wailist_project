@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página de Pago</title>
+</head>
+<body>
+    <h1>Tu período gratuito ha expirado</h1>
+    <p>Para continuar utilizando el servicio, por favor realiza el pago.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Pagar ahora</button>
+    </form>
+</body>
+</html>

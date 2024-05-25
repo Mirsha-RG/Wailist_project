@@ -48,12 +48,14 @@ INSTALLED_APPS = [
     'usuarios',
     'perfil',
     'metricas',
+    'pagina',
     
     #THIRD APPS
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
-    'dj_database_url'
+    'dj_database_url',
+    'captcha',
     
     
 ]
@@ -69,7 +71,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'metricas.middlewares.MetricsMiddleware'
+    'metricas.middlewares.MetricsMiddleware',
+    'usuarios.middlewares.CheckSubscriptionMiddleware',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True 
@@ -157,6 +160,9 @@ GEOIP_PATH = os.path.join(BASE_DIR, 'geoip')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

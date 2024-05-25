@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.utils.text import slugify
 import csv
 
 from django.shortcuts import get_object_or_404
@@ -22,8 +23,11 @@ class CreateListaView(APIView):
         serializer = ListaSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()      
-        return Response({'message': 'Creado'}, status=status.HTTP_201_CREATED) 
-    
+        Lista.url = f'/landing/{slugify(Lista.nombre)}-{Lista.id}/'
+        Lista.save()
+        
+        return Response({'message': 'Creado', 'url': Lista.url}, status=status.HTTP_201_CREATED)
+           
     
 class ListListaView(APIView):
        permission_classes = (IsAuthenticated, )  
@@ -35,7 +39,7 @@ class ListListaView(APIView):
     
     
 class RetriveListaView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticated, )
     
     def get(self,request):
         lista_list = Lista.objects.all()
@@ -86,6 +90,16 @@ class ExportarListaCSVAPIView(APIView):
             ])
         
         return response
+
+
+class ToggleListaView(APIView):
+    permission_classes = (IsAuthenticated, )
+    
+    def post(self, request, lista_id, format=None):
+        lista = Lista.objects.get(pk=lista_id)
+        lista.is_active = not lista.is_active
+        lista.save()
+        return Response ({'message':'El estado de privacidad de la lista se ha actualizado correctamente'}, status=status.HTTP_200_OK)
         
         
          
